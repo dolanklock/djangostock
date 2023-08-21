@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %} <!-- this allows for embedded python behavior in html file-->
+<!-- anything in here will be run in base html-->
+    <h5>{{no_symbol}}</h5>
+    {% if request_successful %}
+        <h1>{{company_name}}</h1>
+        <hr/>
+        <h4>Stock Company Info</h4>
+        <b>CEO: </b>{{ceo}}<br/>
+        <b>Sector: </b>{{sector}}<br/>
+        <b>About: </b>{{longDescription}}<br/>
+        <br/>
+        <h4>Stock Prices</h4>
+        <b>Open: </b>${{open}}<br/>
+        <b>Close: </b>${{close}}<br/>
+        <b>High: </b>${{high}}<br/>
+        <b>Low: </b>${{low}}<br/>
+        <b>Market Cap: </b>${{marketcap}}<br/>
+    {% else %}
+        <p>{{error}}</p>
+    {% endif %}
+
+{{json_data_company_info}}
+{% endblock %}

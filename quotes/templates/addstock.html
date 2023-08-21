@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="{% url 'addstock' %}" role="search" method="POST">
+        {%csrf_token%}
+        <input width="15" type="search" placeholder="Ticker Symbol" aria-label="Search" name="ticker">
+        <button class="btn btn-outline-dark" type="submit">Add</button>
+    </form>
+    <hr>
+    {% for item in ticker %}
+        <li>{{item}}<br/></li>
+    {% endfor %}
+
+{% endblock %}
