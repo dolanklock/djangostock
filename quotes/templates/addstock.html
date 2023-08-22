@@ -9,7 +9,8 @@
     </form>
     <hr>
     {% for item in ticker %}
-        <li>{{item}}<br/></li>
+        <li>{{item}} <a href="{% url 'deletestock' item.id %}"> Delete</a><br/></li> <!--the {% url 'deletestock' item.id %} "deletestock" 
+            points to the urls file and the "name" parameter of the url and calls that path. the "item.id" gets passed into the views.delete_stock function-->
     {% endfor %}
 
 {% endblock %}

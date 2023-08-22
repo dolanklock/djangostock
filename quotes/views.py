@@ -75,11 +75,9 @@ def home(request):  # request coming from urls and calls this function and passe
         else:
             return render(request, 'home.html', {"error": "Ticker symbol does not exist"})
     else:
-        # return main_render(request=request)
         return render(request, 'home.html', {"no_symbol": "Enter a Ticker Symbol..."})
 
 def add_stock(request):
-    # TODO: why is ticker not being added to database?
     if request.method == "POST":
         form = forms.StockForm(request.POST or None)
         if form.is_valid():  # checks if valid
@@ -90,6 +88,12 @@ def add_stock(request):
     # else:  #TODO: fix this, want code in here to always show. 
     ticker = models.Stock.objects.all()  # this gets the objects of class Stock from models
     return render(request, "addstock.html", {'ticker': ticker})
+
+def delete_stock(request, stock_id):
+    item = models.Stock.objects.get(pk=stock_id)  # pk is primary key. getting all objects in database 'stock'. and then getting the specific item that matches id passed in
+    item.delete()  # deletes the item from database
+    messages.success(request, ("Ticker symbol deleted"))  # this message gets listed on the admin page inside the new database
+    return redirect("addstock")  # redirects page back to addstock html file
 
 def about(request):
     return render(request, 'about.html', {})
