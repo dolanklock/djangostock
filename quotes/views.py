@@ -45,8 +45,8 @@ def main_render(request, TICKER=None):
     if TICKER is None:
         TICKER = "TSLA"
     try:
-        response = requests.get(f"https://api.iex.cloud/v1/data/CORE/INTRADAY_PRICES/{TICKER}?token={API_KEY}")
-        response_company_info = requests.get(f"https://api.iex.cloud/v1/data/core/company/{TICKER}?token={API_KEY}")
+        response = requests.get(f"https://api.iex.cloud/v1/data/CORE/QUOTE/{TICKER}?token={API_KEY}")
+        response_company_info = requests.get(f"https://api.iex.cloud/v1/data/core/company/{TICKER}?token={API_KEY}")  # separate call needed for company info
         json_data = response.json()
         json_data_company_info = response_company_info.json()
     except Exception as ex:
