@@ -7,10 +7,40 @@
         <input width="15" type="search" placeholder="Ticker Symbol" aria-label="Search" name="ticker">
         <button class="btn btn-outline-dark" type="submit">Add</button>
     </form>
-    <hr>
-    {% for item in ticker %}
-        <li>{{item}} <a href="{% url 'deletestock' item.id %}"> Delete</a><br/></li> <!--the {% url 'deletestock' item.id %} "deletestock" 
-            points to the urls file and the "name" parameter of the url and calls that path. the "item.id" gets passed into the views.delete_stock function-->
-    {% endfor %}
+    {% if request_successful %}
+        <br/>
+        <table class="table table-bordered table-striped table-bordered table table-hover">
+            <thead class="table-dark">
+                <tr>    
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Open</th>
+                    <th scope="col">Close</th>
+                    <th scope="col">52 Week High</th>
+                    <th scope="col">52 Week Low</th>
+                    <th scope="col">Market Cap</th>
+                    <th scope="col">Remove Stock</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for company in batch %}
+                    <tr>
+                        <th scope="row">{{company.companyName}}</th>
+                        <td>${{company.iexOpen}}</td>
+                        <td>${{company.iexClose}}</td>
+                        <td>${{company.week52High}}</td>
+                        <td>${{company.week52Low}}</td>
+                        <td>${{company.marketCap}}</td>
+                        <td><a href="{% url 'deletestock' company.ticker_id %}"> Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        {{error}}
+    {% endif %}
 
 {% endblock %}
+
+<!--the {% url 'deletestock' item.id %} "deletestock" points to the urls file and the "name" parameter of 
+the url and calls that path which executes function tied to it. the "item.id" gets passed into the views.delete_stock function-->
