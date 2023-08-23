@@ -21,11 +21,11 @@ def ticker_valid(ticker):
     response = requests.get("https://stockanalysis.com/list/nasdaq-stocks/")
     webpage_stock = response.text
     soup_test = BeautifulSoup(webpage_stock, "html.parser")
-    all_anchor_tags = soup_test.find_all(class_="sym svelte-1tv1ofl")
-    for tag in all_anchor_tags:
-        tick = tag.a
+    all_tags = soup_test.find_all(class_="sym svelte-1tv1ofl")
+    for tag in all_tags:
+        tick = tag.a  # getting anchor tags within
         try:
-            TICKERS_NASDAQ.append(tick.string)
+            TICKERS_NASDAQ.append(tick.string)  # 'tick.string' gets the text inside the anchor tag
         except Exception as ex:
             pass
     return ticker in TICKERS_NASDAQ
